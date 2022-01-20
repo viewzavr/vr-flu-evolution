@@ -2,6 +2,10 @@
 
 Visualization of pre-computed evolution paths of influensa virus.
 
+## Online
+
+[Run online demo](https://viewzavr.com/apps/vrungel/?src=https://viewzavr.com/apps/vr-flu-evolution/main.cl)
+
 ## Local start
 
 Install NodeJs on your computer. Then issue commands:

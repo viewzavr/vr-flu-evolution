@@ -2,12 +2,12 @@ load files="lib3dv3 csv params io gui render-params df misc
             scene-explorer-3d";
 
 //pq:  get_query_param name="csv_file";
-pq: output="http://viewlang.ru/assets/majid/2021-11/TSNE_output.csv";
+pq: output="https://viewlang.ru/assets/majid/2021-11/TSNE_output.csv";
 dat: load-file file=@pq->output | parse_csv | rescale_rgb;
 
 /// рендеринг 3D сцены
 
-render3d bgcolor=[0.1,0.2,0.3] target=@view
+render3d bgcolor=@bgcol->value target=@view
 {
     orbit_control;
     camera3d pos=[0,0,40] center=[0,0,0];
@@ -29,7 +29,12 @@ screen auto-activate {
         dom tag="h3" innerText="Visual settings" style="margin:0;";
 
         cb1: checkbox text="Show titles";
+        //text text="Titles color:";
         titlecol: select_color value=[1,1,1];
+        
+        text text="Background:";
+        bgcol: select_color value=[0.1,0.2,0.3];
+        
 
         //render-params object=@t3d;
       };
