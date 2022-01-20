@@ -17,4 +17,4 @@ npx vrungel
 
 ## Copyright
 
-2022 (c) Majid Forgani, Pavel Vasev
+2022 (c) Majid Forghani, Pavel Vasev
