@@ -12,9 +12,9 @@ render3d bgcolor=@bgcol->value target=@view
     orbit_control;
     camera3d pos=[0,0,40] center=[0,0,0];
 
-    @dat | linestrips;
+    @dat->output | linestrips;
 
-    @dat 
+    @dat->output
       | df_filter code="(line) => line.TEXT?.length > 0"
       | t3d: text3d size=0.2 visible=@cb1->value color=@titlecol->value;
 };
@@ -24,21 +24,23 @@ render3d bgcolor=@bgcol->value target=@view
 screen auto-activate {
 
   column padding="1em" style="z-index: 3; position:absolute;" {
-    if condition=@pq->output {
+    if @pq->output then={
       column gap="0.5em" padding="0.5em" style="background-color: rgba(255 255 255 / 45%)" {
         dom tag="h3" innerText="Visual settings" style="margin:0;";
 
-        cb1: checkbox text="Show titles";
+        cb1: checkbox text="Show titles" value=true;
         //text text="Titles color:";
         titlecol: select_color value=[1,1,1];
         
         text text="Background:";
         bgcol: select_color value=[0.1,0.2,0.3];
-        
 
         //render-params object=@t3d;
       };
-      text text="Please specify path to CSV file in <b>csv_file</b> query parameter." style="color:red";
+      
+    }
+    else={
+     text text="Please specify path to CSV file in <b>csv_file</b> query parameter." style="color:red";    
     };
   };
 
@@ -48,7 +50,7 @@ screen auto-activate {
 
 ///////////////////// визуальная отладка
 
-debugger_screen_r;
+// debugger_screen_r;
 
 //////////////////////////////////////
 
