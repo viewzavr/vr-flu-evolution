@@ -2,8 +2,11 @@ load files="lib3dv3 csv params io gui render-params df misc
             scene-explorer-3d";
 
 //pq:  get_query_param name="csv_file";
-pq: output="https://viewlang.ru/assets/majid/2021-11/TSNE_output.csv";
-dat: load-file file=@pq->output | parse_csv | rescale_rgb;
+//pq: output="https://viewlang.ru/assets/majid/2021-11/TSNE_output.csv";
+dat: load-file file=@pq->file | parse_csv | rescale_rgb;
+
+pq: {{ x-param-file name="file" }} 
+    file=( (get_query_param name="csv_file") or "https://viewlang.ru/assets/majid/2021-11/TSNE_output.csv");
 
 /// рендеринг 3D сцены
 
@@ -24,8 +27,10 @@ render3d bgcolor=@bgcol->value target=@view
 screen auto-activate {
 
   column padding="1em" style="z-index: 3; position:absolute;" {
-    if @pq->output then={
       column gap="0.5em" padding="0.5em" style="background-color: rgba(255 255 255 / 45%)" {
+        dom tag="h3" innerText="Input data" style="margin:0;";
+        render-params object=@pq;      
+      
         dom tag="h3" innerText="Visual settings" style="margin:0;";
 
         cb1: checkbox text="Show titles" value=true;
@@ -34,14 +39,9 @@ screen auto-activate {
         
         text text="Background:";
         bgcol: select_color value=[0.1,0.2,0.3];
+        
 
-        //render-params object=@t3d;
       };
-      
-    }
-    else={
-     text text="Please specify path to CSV file in <b>csv_file</b> query parameter." style="color:red";    
-    };
   };
 
   view: view3d style="position: absolute; width:100%; height: 100%; z-index:-2";
